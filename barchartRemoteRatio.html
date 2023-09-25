@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Salary Visualization</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+  <style>
+    .barRR {
+      transition: fill 0.3s;
+    }
+
+    .barRR-label {
+      font-size: 12px;
+      fill: white;
+    }
+
+    .axis path,
+    .axis line {
+      fill: none;
+      stroke: black;
+    }
+
+    .axis text {
+      font-size: 14px;
+    }
+
+    .tooltipRR {
+      position: absolute;
+      text-align: center;
+      padding: 8px;
+      background-color: #000;
+      font-size: 14px;
+      color: #fff;
+      border: 1px solid #000;
+      opacity: 0;
+      transition: opacity 0.5s;
+    }
+  </style>
+
+  <svg id="chart"></svg>
+
+  <div style="text-align: center; margin-top: 20px;">
+    <label for="year-select">Select Year:</label>
+    <select id="year-select" onchange="updateChart(this.value)">
+      <option value="2020">2020</option>
+      <option value="2021">2021</option>
+      <option value="2022">2022</option>
+      <option value="2023">2023</option>
+    </select>
+  </div>
+
+  <div id="tooltip" class="tooltip"></div>
+
+  <script>
+    var data;
+    var chartWidth = 500;
+    var chartHeight = 400;
+    var margin = { top: 50, right: 40, bottom: 70, left: 160};
+    var innerWidth = chartWidth - margin.left - margin.right;
+    var innerHeight = chartHeight - margin.top - margin.bottom;
+
+    var svg = d3.select("#chart")
+      .attr("width", chartWidth)
+      .attr("height", chartHeight);
+
+    var chart = svg.append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    var tooltip = d3.select("#tooltip");
+
+    function updateChart(year) {
+      var sal_by_remote_ratio = Array.from(data.get(year))
+        .sort((a, b) => a[1][0].remote_ratio - b[1][0].remote_ratio);
+
+      var remoteRatios = sal_by_remote_ratio.map(d => d[1][0].remote_ratio);
+      var avgSalaries = sal_by_remote_ratio.map(d => Number(d3.mean(d[1], e => Number(e.salary_in_usd))));
+
+      var xScale = d3.scaleBand()
+        .domain(remoteRatios.map(String))
+        .range([0, innerWidth])
+        .padding(0.1);
+
+      var yScale = d3.scaleLinear()
+        .domain([0, d3.max(avgSalaries) + 20000])
+        .range([innerHeight, 0]);
+
+      // Remove old chart elements
+      chart.selectAll(".bar").remove();
+      chart.selectAll(".bar-label").remove();
+      chart.select(".x-axis").remove();
+      chart.select(".y-axis").remove();
+      chart.select(".chart-title").remove();
+      chart.select(".y-axis-title").remove();
+      chart.select(".x-axis-title").remove();
+
+      // Update existing bars
+      chart.selectAll(".bar")
+        .data(avgSalaries)
+        .attr("x", (d, i) => xScale(String(remoteRatios[i])))
+        .attr("y", innerHeight)
+        .attr("height", 0)
+        .transition()
+        .duration(800)
+        .attr("y", d => yScale(d))
+        .attr("height", d => innerHeight - yScale(d));
+
+      // Create new bars for entering data
+      chart.selectAll(".bar")
+        .data(avgSalaries)
+        .enter()
+        .append("rect")
+        .attr("class", "bar")
+        .attr("x", (d, i) => xScale(String(remoteRatios[i])))
+        .attr("y", innerHeight)
+        .attr("width", xScale.bandwidth())
+        .attr("height", 0)
+        .attr("data-fill-color", function(d, i) {
+          var remoteRatio = remoteRatios[i];
+          if (remoteRatio === "100") {
+            return "#66c2a5"; // Remote Work
+          } else if (remoteRatio === "50") {
+            return "#fc8d62"; // Hybrid
+          } else if (remoteRatio === "0") {
+            return "#8da0cb"; // No Remote Work
+          }
+        })
+        .style("fill", function(d, i) {
+          return d3.select(this).attr("data-fill-color");
+        })
+        .on("mouseover", function(event, d, i) {
+          // Mouseover behavior
+        })
+        .on("mouseout", function() {
+          // Mouseout behavior
+        })
+        .transition()
+        .duration(800)
+        .attr("y", d => yScale(d))
+        .attr("height", d => innerHeight - yScale(d));
+
+      chart.selectAll(".bar-label")
+        .data(avgSalaries)
+        .enter()
+        .append("text")
+        .attr("class", "bar-label")
+        .attr("x", (d, i) => xScale(String(remoteRatios[i])) + xScale.bandwidth() / 2)
+        .attr("y", d => yScale(d) - 5)
+        .attr("text-anchor", "middle")
+        .attr("dy", "0.35em")
+        .text(d => "$" + Number(d).toFixed(2))
+        .style("fill", "black");
+
+      chart.append("g")
+        .attr("class", "x-axis")
+        .attr("transform", "translate(0," + innerHeight + ")")
+        .call(d3.axisBottom(xScale).tickFormat(function(d) {
+          if (d === "0") {
+            return "No Remote Work";
+          } else if (d === "50") {
+            return "Hybrid";
+          } else if (d === "100") {
+            return "Remote Work";
+          } else {
+            return "";
+          }
+        }))
+        .selectAll("text")
+        .style("font-size", "12px");
+
+      chart.append("g")
+        .attr("class", "y-axis")
+        .transition()
+        .duration(800)
+        .call(d3.axisLeft(yScale).ticks(5).tickFormat(d3.format("$,.0f")))
+        .selectAll("text")
+        .style("font-size", "12px");
+
+      svg.selectAll(".axis")
+        .selectAll("text")
+        .attr("font-size", "14px");
+
+      chart.append("text")
+        .attr("class", "x-axis-title")
+        .attr("transform", "translate(" + (innerWidth / 2) + " ," + (innerHeight + margin.top + 10) + ")")
+        .style("text-anchor", "middle")
+        .text("Remote Ratio")
+        .style("font-size", "16px")
+        .style("font-weight", "bold");
+
+      chart.append("text")
+        .attr("class", "y-axis-title")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 0 - margin.left)
+        .attr("x", 0 - (innerHeight / 2))
+        .attr("dy", "1em")
+        .style("text-anchor", "middle")
+        .text("Average Salary (USD)")
+        .style("font-size", "16px")
+        .style("font-weight", "bold");
+
+      chart.append("text")
+        .attr("class", "chart-title")
+        .attr("x", innerWidth / 2)
+        .attr("y", -20)
+        .attr("text-anchor", "middle")
+        .style("font-size", "16px")
+        .style("font-weight", "bold")
+        .text("Average Salary by Remote Ratio (" + year + ")");
+    }
+
+    d3.csv("ds_salaries.csv").then(function(dataset) {
+      data = d3.group(dataset, d => d.work_year, d => d.remote_ratio);
+
+      // Create a variable for the default year
+      var defaultYear = "2020";
+      
+      // Call the updateChart function with the default year
+      updateChart(defaultYear);
+
+      // Event listener for the dropdown menu
+      var dropdown = document.getElementById("year-select");
+      dropdown.addEventListener("change", function() {
+        var selectedYear = dropdown.value;
+        updateChart(selectedYear);
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet" type="text/css" href="mystyle.css">
+<head>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="https://d3js.org/topojson.v3.min.js"></script>
+
+<title>Analyzing Data Science Job Salaries and Employment Trends</title>
+
+</head>
+
+<body style="background-color:rgb(211, 221, 224)">
+
+    <div class="header">
+        <div class="title">Analyzing Data Science Job Salaries and Employment Trends</div>
+        <div class="controls">
+          <button class="button" id="playButton">Play</button>
+          <button class="button" id="stopButton">Stop</button>
+          <input type="range" class="slider" id="myRange">
+          <div class="slider-value" id="sliderValue"></div>
+        </div>
+    </div>
+     
+    <div class="Row1">
+      <div class="MapChart">
+        <h2>Average Salaries By Company Location (Country)</h2>
+        <div class="chart-container">
+          <div id="mapchart"></div>
+          <div id="legend"></div>
+        </div>
+      </div>
+
+      <div class = "Column1">
+        <div id="barrow" class="barrow">
+          <div class="BarChart" id="barchart"></div>
+          <div id="tooltip" class="tooltip"></div>
+        </div>
+        <div class= "RWR">
+          <div class="chart-container2">
+            <p style="font-family: Arial;font-size:16px">Remote Work Ratio Pie Chart</p>
+            <div id="PieChart" class="PieChart"></div>
+            <div id="legend-containerPIE"></div>
+          </div>
+          <div>
+            <div id="barrrchart"></div>
+            <div id="tooltipRR" class="tooltipRR"></div>            
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="Row2">
+      <div class="boxplot1">
+        <div id="BoxPlotCS"></div>
+        <div id="tooltipCS" class="tooltipCS" style="display: none;"></div>
+      </div>
+      <div class="boxplot2">
+        <div id="BoxPlotET"></div>
+        <div id="tooltipET" class="tooltipET" style="display: none;"></div>
+      </div>
+      <div class="boxplot3">
+        <div id="BoxPlotEL"></div>
+        <div id="tooltipEL" class="tooltipEL" style="display: none;"></div>
+      </div>
+    </div>
+
+    <div id="Footer" class="Footer">
+      <footertext><b>Directory For All The Chart above.</b></footertext>
+      <div id="FooterLink" class="FooterLink">
+        <a href="MapViz.html">Average Salaries By Company Location (Country) [MAP]</a>
+        <a href="BarChart.html">Top 10 Salaries by Job Title [BAR CHART]</a>
+        <a href="PiechartRemoteWorkRatio.html">Remote Work Ratio [PIE CHART]</a>
+        <a href="barchartRemoteRatio.html">Average Salary by Remote Ratio [BAR CHART]</a>
+        <a href="boxPlot11.html">Salary Distribution by Company Size [BOX PLOT]</a>
+        <a href="boxPlot2.html">Salary Distribution by Employment Type [BOX PLOT]</a>
+        <a href="boxPlot3.html">Salary Distribution by Experience Level [BOX PLOT]</a>
+      </div>
+      <footertext>
+        <hr>
+        <b>This visualization is created by Caktus (GROUP 3) for 
+          <br>TDS 3402 DATA VISUALIZATION project. </b><br>
+        Member of the group: <br>
+        1191100280 Alvin Fong Weng Yew<br>
+        1191100281 Tan Sin Zhung<br>
+        1191100292 Leong Yi Hong
+        <hr>
+      </footertext>
+    </div>
+
+
+    <script src="Map.js"></script>
+    <script src="Slider.js"></script>
+    <script src="BarChart.js"></script>
+    <script src="BoxPlotCS.js"></script>
+    <script src="BoxPlotET.js"></script>
+    <script src="BoxPlotEL.js"></script>
+    <script src="PieChart.js"></script>
+    <script src="BarChartRemoteRatio.js"></script>
+    
+
+
+    
+</body>
+</html>

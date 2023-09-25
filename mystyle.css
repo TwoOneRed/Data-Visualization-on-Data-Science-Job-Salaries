@@ -1,0 +1,409 @@
+.Row1 {
+    display: grid;
+    grid-template-columns:  1fr 1fr;
+    grid-gap:2px;
+    margin-bottom: 10px;
+}
+.Row2 {
+  display: grid;
+  grid-template-columns:  1fr 1fr 1fr;
+  grid-gap:2px; /* Adjust the gap between the box plots as needed */
+}
+.RWR {
+  display: grid;
+  grid-template-columns:  1fr 1fr ;
+  grid-gap: 1px; /* Adjust the gap between the box plots as needed */
+  background: #ffffff;
+  font-size: 20px;
+  font-weight: bold;
+  padding-left: 10px;
+}
+
+#Footer{
+  background-color: rgb(129, 169, 170); /* Set the desired background color of the footer */
+  height: 240px; /* Set the desired height of the footer */
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+footertext {
+  font-family: Arial, sans-serif; /* Use Arial font */
+  font-size: 14px; /* Set the desired font size */
+  text-align: center;
+  margin-top: 10px; /* Set the desired margin */
+}
+
+#FooterLink {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+#FooterLink a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: rgb(0, 0, 0); /* Set the desired text color */
+  font-size: 16px; /* Set the desired font size */
+  padding: 10px 20px; /* Set the desired padding */
+  background-color: rgba(201, 198, 198, 0.5); /* Set the desired background color of the buttons */
+  border-radius: 5px; /* Set the desired border radius */
+  margin: 10px;
+}
+
+
+
+.Column1 {
+  display: grid;
+  grid-template-columns:1fr;
+}
+
+.boxplot1,
+.boxplot2,
+.boxplot3{
+  flex:1;
+  background: rgb(255, 255, 255);
+}
+
+/*Header CSS */
+.header {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding: 10px;
+    background: rgb(56, 72, 83);
+    color: rgb(255, 255, 255);
+    margin-bottom: 10px;
+}
+.title {
+    flex-grow: 1;
+    font-size: 30px;
+    font-family: Arial;
+  }
+
+.controls {
+    display: flex;
+    align-items: center;
+  }
+
+/* Slider CSS */
+.slider-container {
+    font-family: Arial;
+    width: 30%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.slider {
+    width: 60%;
+    background: #ffffff;
+    outline: none;
+    opacity: 1;
+    transition: opacity .2s;
+    padding: 5px;
+}
+
+.slider-value {
+    font-size: 14px;
+    margin-top: 4px;
+}
+
+/* Button CSS */
+.button-container {
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.button {
+    margin: 0 5px;
+    padding: 5px 10px;
+    font-size: 14px;
+    background-color: #ffffff;
+    border: none;
+    cursor: pointer;
+}
+.button:hover {
+    background-color: #c4d4da;
+    color: rgb(0, 0, 0);
+  }
+
+.button:active {
+    background-color: #020202;
+    color: rgb(255, 255, 255);
+  }
+
+/* CSS FOR MAPS */
+ /* CSS styles for the visualization */
+.MapChart{
+    padding-right: 80px;
+    background-color: #ffffff;
+    font-size: 12px;
+    margin-right:10px;
+    position: relative;
+
+}
+
+#mapchart {
+    flex: 1;
+  }
+  
+.chart-container {
+    display: flex;
+  }
+path {
+    stroke: grey;
+  }
+
+path.hoverable:hover {
+  fill: orange;
+}
+
+.legend {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-top: 20px;
+  margin-right: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+  justify-content: flex-start;
+  font-family: Arial, sans-serif;
+}
+
+.legend-scale {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  margin-right: 10px;
+}
+
+.legend-scale span {
+  font-size: 12px;
+  margin: 10px 0;
+  color: black;
+}
+
+.legend-color {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.legend-color-box {
+  width: 30px;
+  height: 30px;
+  margin: 2px 0;
+}
+
+.BarChart {
+    flex: 1;
+}
+
+.bar {
+    fill: steelblue;
+    transition: width 0.5s;
+  }
+
+.bar-label {
+  font-size: 12px;
+  font-family: Arial;
+  fill: white;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: black;
+}
+
+.axis text {
+  font-family: Arial;
+  font-size: 14px;
+}
+
+.tooltip {
+  font-family: Arial;
+  position: absolute;
+  text-align: center;
+  padding: 8px;
+  background-color: #030303;
+  font-size: 14px;
+  color: #ffffff;
+  border: 1px solid #000;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+  
+/*Box PLOT*/
+.dot {
+  fill: steelblue;
+  opacity: 0.7;
+}
+
+.box {
+  fill: lightgray;
+  stroke: black;
+}
+
+.whisker {
+  stroke: black;
+}
+
+.median-line {
+  stroke: red;
+}
+
+.axis-label {
+  font-size: 12px;
+  font-weight: bold;
+  text-anchor: middle;
+}
+
+.chart-title {
+  font-size: 18px;
+  font-weight: bold;
+  text-anchor: middle;;
+}
+
+#year {
+  margin-top: 20px;
+}
+
+#tooltipCS {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 8px;
+  font-size: 12px;
+  pointer-events: none;
+}
+
+#tooltipET {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 8px;
+  font-size: 12px;
+  pointer-events: none;
+}
+
+#tooltipEL {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 8px;
+  font-size: 12px;
+  pointer-events: none;
+}
+
+
+/*PIE*/
+
+.slice {
+  cursor: pointer;
+}
+
+.slice:hover {
+  opacity: 0.8;
+}
+
+.label {
+  font-family: Arial, sans-serif;
+  font-size: 10px;
+  text-anchor: middle;
+}
+
+.count {
+  font-family: Arial, sans-serif;
+  font-size: 10px;
+  text-anchor: middle;
+}
+
+.percentage {
+  font-family: Arial, sans-serif;
+  font-size: 10px;
+  text-anchor: middle;
+  font-weight: bold;
+}
+
+.chart-title {
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  text-anchor: middle;
+  font-weight: bold;
+}
+
+.tooltip {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  padding: 5px;
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  pointer-events: none;
+}
+
+
+#legend-containerPIE {
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  margin-left: 10px;
+}
+.legendPIE {
+  display: flex;
+  align-items: center;
+  font-family: Arial, sans-serif;
+  font-size: 10px;
+  margin-bottom: 5px;
+}
+
+.legend-colorPIE {
+  width: 10px;
+  height: 10px;
+  margin-right: 5px;
+}
+
+.barRR {
+  transition: fill 0.3s;
+}
+
+.barRR-label {
+  font-size: 12px;
+  fill: rgb(0, 0, 0);
+}
+
+.tooltipRR {
+  position: absolute;
+  text-align: center;
+  padding: 8px;
+  background-color: #000;
+  font-size: 14px;
+  color: #fff;
+  border: 1px solid #000;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.barrow{
+  background-color: white;
+  margin-bottom: 5px;
+}
+
+hr {
+  height:1px;
+  border-width:0;
+  background-color:#030303;
+}
